@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>КР по матанализу: варианты</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;600&family=Unbounded:wght@600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: спокойный экзаменационный лист, без украшений
+   IDEA: бланк контрольной на листе в клетку, ответы проверяет красная ручка
+   PICTURE: сам лист варианта — главный объект страницы
+   COLOUR and TYPE: белый лист, чёрные чернила, клетка, красный акцент; Unbounded + Golos Text
+   LAYOUT: шапка, ряд номеров вариантов, один лист по центру */
+:root{color-scheme:light dark;
+--bg:light-dark(#eef1f4,#14171a);--sheet:light-dark(#fff,#1c2024);--ink:light-dark(#111418,#e9ecef);
+--muted:light-dark(#5b6470,#9aa4af);--grid:light-dark(#dfe6ee,#252b31);--red:light-dark(#c8102e,#ff5d6c);--line:light-dark(#d6dbe1,#30363d)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Golos Text",system-ui,sans-serif;overflow-x:clip}
+header{padding:clamp(24px,4vw,48px) max(5vw,16px) 8px;max-width:1000px;margin:0 auto}
+h1{font:600 clamp(26px,4vw,40px)/1.1 Unbounded,"Golos Text",sans-serif;margin:0 0 12px;text-wrap:balance}
+.lead{color:var(--muted);max-width:68ch;margin:0 0 6px}
+nav{position:sticky;top:0;z-index:2;background:var(--bg);display:flex;flex-wrap:wrap;gap:8px;padding:12px max(5vw,16px);max-width:1000px;margin:0 auto}
+nav a{display:grid;place-items:center;min-width:44px;height:44px;border:1px solid var(--line);border-radius:8px;color:var(--ink);text-decoration:none;font-weight:600;background:var(--sheet)}
+#nt a{padding:0 14px}
+nav[hidden]{display:none}
+.mode{display:flex;gap:0;max-width:1000px;margin:8px auto 0;padding:0 max(5vw,16px)}
+.mode button{font:600 15px "Golos Text",sans-serif;min-height:44px;padding:0 18px;border:1px solid var(--ink);background:var(--sheet);color:var(--ink);cursor:pointer}
+.mode button:first-child{border-radius:8px 0 0 8px}.mode button:last-child{border-radius:0 8px 8px 0}
+.mode button[aria-selected=true]{background:var(--ink);color:var(--sheet)}
+ul.byt{list-style:none;padding:0;margin:14px 0 0}
+nav a[aria-current]{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+nav a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+main{padding:8px max(5vw,16px) 56px;max-width:1000px;margin:0 auto}
+.var{display:none;background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:clamp(18px,4vw,44px);
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:22px 22px;background-color:var(--sheet)}
+.var.on{display:block}
+.var{scroll-margin-top:84px}
+h2{font:600 26px/1.1 Unbounded,sans-serif;margin:0 0 18px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+h2 small{font:400 15px "Golos Text",sans-serif;color:var(--red)}
+ol{margin:0;padding-left:1.4em}
+li{margin:0 0 22px;padding-left:4px}
+li::marker{font-weight:600}
+.q{margin:0 0 4px;background:var(--sheet);display:inline}
+.pts{color:var(--muted);white-space:nowrap}
+.f{overflow-x:auto;overflow-y:hidden;background:var(--sheet);margin:6px 0;padding:2px 0}
+details{display:inline-block;max-width:100%;margin-top:2px}
+summary{cursor:pointer;color:var(--red);font-weight:600;padding:6px 0;min-height:32px;list-style:none;background:var(--sheet);display:inline-block}
+summary::before{content:"▸ "}details[open] summary::before{content:"▾ "}
+details p{margin:4px 0 0;padding:8px 12px;border-left:3px solid var(--red);background:var(--sheet);overflow-x:auto}
+.all{font:600 15px "Golos Text",sans-serif;min-height:44px;padding:0 16px;border-radius:8px;border:1px solid var(--red);color:var(--red);background:var(--sheet);cursor:pointer}
+footer{color:var(--muted);font-size:14px;max-width:1000px;margin:0 auto;padding:0 max(5vw,16px) 40px}
+@media print{nav,.all,header .lead:last-child{display:none}.var{display:block;break-after:page;background:none;border:0}details{display:none}}
+</style>
+</head>
+<body>
+<header>
+<h1>Контрольная по матанализу: 10 тренировочных вариантов</h1>
+<p class="lead">Темы: числовые ряды, знакочередующиеся ряды, степенные ряды, равномерная сходимость, ряд Тейлора. Формат как в демоверсии 2026 года: 6 задач, 15 баллов. Варианты 1–9 среднего уровня, 10-й чуть сложнее.</p>
+<p class="lead">Ответы спрятаны под каждой задачей: сначала реши сам, потом сверяйся. $R_k$ — остаток ряда после первых $k$ членов.</p>
+</header>
+<div class="mode" role="tablist"><button type="button" data-m="v" role="tab">По вариантам</button><button type="button" data-m="t" role="tab">По типам задач</button></div>
+<nav id="nv" aria-label="Варианты"><a href="#v1" data-v="1">1</a><a href="#v2" data-v="2">2</a><a href="#v3" data-v="3">3</a><a href="#v4" data-v="4">4</a><a href="#v5" data-v="5">5</a><a href="#v6" data-v="6">6</a><a href="#v7" data-v="7">7</a><a href="#v8" data-v="8">8</a><a href="#v9" data-v="9">9</a><a href="#v10" data-v="10">10</a></nav>
+<nav id="nt" aria-label="Типы задач" hidden><a href="#t1" data-v="t1">1. Положительный ряд: сравнение</a><a href="#t2" data-v="t2">2. Признаки Коши и Даламбера</a><a href="#t3" data-v="t3">3. Знакочередующийся ряд</a><a href="#t4" data-v="t4">4. Степенной ряд</a><a href="#t5" data-v="t5">5. Признак Вейерштрасса</a><a href="#t6" data-v="t6">6. Ряд Тейлора</a></nav>
+<main>
+<section class="var" id="v1"><h2>Вариант 1<small></small></h2>
+<ol><li><p class="q">Исследовать на сходимость <span class="pts">(1 балл)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty} n\,\operatorname{tg}\frac{3}{n^3+1}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $a_n\sim \dfrac{3}{n^2}$.</p></details></li><li><p class="q">Исследовать на сходимость <span class="pts">(2 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\left(\frac{3n+1}{3n+4}\right)^{n^2}$$</div>
+<details><summary>Ответ</summary><p>Сходится (радикальный Коши): $\sqrt[n]{a_n}\to e^{-1}<1$.</p></details></li><li><p class="q">Исследовать на абсолютную и условную сходимость. Оценить остаток ряда $R_{4}$ <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{(-1)^{n+1}\,n}{n^2+3}$$</div>
+<details><summary>Ответ</summary><p>Сходится условно. $|R_4|\le a_5=\dfrac{5}{28}$.</p></details></li><li><p class="q">Найти радиус и интервал сходимости степенного ряда. Исследовать сходимость на концах интервала <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{(x-3)^n}{n\cdot 2^n}$$</div>
+<details><summary>Ответ</summary><p>$R=2$, интервал $(1;5)$. При $x=1$ сходится условно, при $x=5$ расходится. Область: $[1;5)$.</p></details></li><li><p class="q">Пользуясь признаком Вейерштрасса, доказать равномерную сходимость функционального ряда на указанном промежутке <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{\sin nx}{n^2+x^2},\quad x\in\mathbb R$$</div>
+<details><summary>Ответ</summary><p>Мажоранта $\sum\dfrac1{n^2}$.</p></details></li><li><p class="q">Разложить $f(x)$ в ряд Тейлора в окрестности точки $x_0$. Указать область сходимости и найти указанную производную <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle f(x)=x^2\ln(1+3x),\quad x_0=0,\quad f^{(10)}(0)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=\sum\limits_{n=1}^{\infty}\dfrac{(-1)^{n+1}3^n}{n}\,x^{n+2}$, $x\in\left(-\tfrac13;\tfrac13\right]$. $f^{(10)}(0)=-\dfrac{10!\cdot 3^8}{8}=-2\,976\,069\,600$.</p></details></li></ol>
+<button class="all" type="button">Показать все ответы</button></section>
+<section class="var" id="v2"><h2>Вариант 2<small></small></h2>
+<ol><li><p class="q">Исследовать на сходимость <span class="pts">(1 балл)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\sqrt n\left(1-\cos\frac{2}{n}\right)$$</div>
+<details><summary>Ответ</summary><p>Сходится: $a_n\sim \dfrac{2}{n^{3/2}}$.</p></details></li><li><p class="q">Исследовать на сходимость <span class="pts">(2 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\left(\frac{2n^2+1}{2n^2+3}\right)^{n^3}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $\sqrt[n]{a_n}\to e^{-1}<1$.</p></details></li><li><p class="q">Исследовать на абсолютную и условную сходимость. Оценить остаток ряда $R_{4}$ <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=2}^{\infty}\frac{(-1)^n}{n\ln n}$$</div>
+<details><summary>Ответ</summary><p>Сходится условно (ряд из модулей расходится по интегральному признаку). $|R_4|\le \dfrac{1}{6\ln 6}$.</p></details></li><li><p class="q">Найти радиус и интервал сходимости степенного ряда. Исследовать сходимость на концах интервала <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{(x+1)^{2n}}{4^n\sqrt n}$$</div>
+<details><summary>Ответ</summary><p>$R=2$, интервал $(-3;1)$. На обоих концах ряд $\sum\frac1{\sqrt n}$ расходится. Область: $(-3;1)$.</p></details></li><li><p class="q">Пользуясь признаком Вейерштрасса, доказать равномерную сходимость функционального ряда на указанном промежутке <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{x}{1+n^4x^2},\quad x\in[0;+\infty)$$</div>
+<details><summary>Ответ</summary><p>Максимум при $x=\frac1{n^2}$: мажоранта $\sum\dfrac{1}{2n^2}$.</p></details></li><li><p class="q">Разложить $f(x)$ в ряд Тейлора в окрестности точки $x_0$. Указать область сходимости и найти указанную производную <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle f(x)=\frac{x}{4+x^2},\quad x_0=0,\quad f^{(9)}(0)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=\sum\limits_{n=0}^{\infty}\dfrac{(-1)^n x^{2n+1}}{4^{n+1}}$, $x\in(-2;2)$. $f^{(9)}(0)=\dfrac{9!}{4^5}=\dfrac{2835}{8}$.</p></details></li></ol>
+<button class="all" type="button">Показать все ответы</button></section>
+<section class="var" id="v3"><h2>Вариант 3<small></small></h2>
+<ol><li><p class="q">Исследовать на сходимость <span class="pts">(1 балл)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}(n+1)\ln\left(1+\frac{1}{n^2+2}\right)$$</div>
+<details><summary>Ответ</summary><p>Расходится: $a_n\sim \dfrac1n$.</p></details></li><li><p class="q">Исследовать на сходимость <span class="pts">(2 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{(n!)^2\,3^n}{(2n)!}$$</div>
+<details><summary>Ответ</summary><p>Сходится (Даламбер): $\dfrac{a_{n+1}}{a_n}\to\dfrac34<1$.</p></details></li><li><p class="q">Исследовать на абсолютную и условную сходимость. Оценить остаток ряда $R_{3}$ <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{(-1)^n}{n^2+1}$$</div>
+<details><summary>Ответ</summary><p>Сходится абсолютно. $|R_3|\le a_4=\dfrac1{17}$.</p></details></li><li><p class="q">Найти радиус и интервал сходимости степенного ряда. Исследовать сходимость на концах интервала <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\left(1+\frac1n\right)^{n^2}(x-1)^n$$</div>
+<details><summary>Ответ</summary><p>$R=\dfrac1e$, интервал $\left(1-\frac1e;1+\frac1e\right)$. На концах $|a_n|R^n\to e^{-1/2}\ne0$, ряд расходится. Область: $\left(1-\frac1e;1+\frac1e\right)$.</p></details></li><li><p class="q">Пользуясь признаком Вейерштрасса, доказать равномерную сходимость функционального ряда на указанном промежутке <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{\operatorname{arctg}(nx)}{n\sqrt n},\quad x\in\mathbb R$$</div>
+<details><summary>Ответ</summary><p>Мажоранта $\sum\dfrac{\pi}{2n^{3/2}}$.</p></details></li><li><p class="q">Разложить $f(x)$ в ряд Тейлора в окрестности точки $x_0$. Указать область сходимости и найти указанную производную <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle f(x)=\ln(5-2x),\quad x_0=1,\quad f^{(7)}(1)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=\ln3-\sum\limits_{n=1}^{\infty}\dfrac{2^n}{3^n n}(x-1)^n$, $x\in\left[-\tfrac12;\tfrac52\right)$. $f^{(7)}(1)=-\dfrac{6!\cdot2^7}{3^7}=-\dfrac{10240}{243}$.</p></details></li></ol>
+<button class="all" type="button">Показать все ответы</button></section>
+<section class="var" id="v4"><h2>Вариант 4<small></small></h2>
+<ol><li><p class="q">Исследовать на сходимость <span class="pts">(1 балл)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{\operatorname{arctg}^2(n^2+1)}{n\sqrt n}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $a_n\sim\dfrac{\pi^2}{4n^{3/2}}$ (аргумент арктангенса стремится к $\infty$, а не к нулю).</p></details></li><li><p class="q">Исследовать на сходимость <span class="pts">(2 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{1}{2^n}\left(\frac{n+2}{n+1}\right)^{n^2}$$</div>
+<details><summary>Ответ</summary><p>Расходится: $\sqrt[n]{a_n}\to\dfrac e2>1$.</p></details></li><li><p class="q">Исследовать на абсолютную и условную сходимость. Оценить остаток ряда $R_{3}$ <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{(-1)^{3n}(2n+1)}{n(n+1)}$$</div>
+<details><summary>Ответ</summary><p>Сходится условно. $|R_3|\le a_4=\dfrac{9}{20}$.</p></details></li><li><p class="q">Найти радиус и интервал сходимости степенного ряда. Исследовать сходимость на концах интервала <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{n^2(x+2)^n}{3^n}$$</div>
+<details><summary>Ответ</summary><p>$R=3$, интервал $(-5;1)$. На концах $|a_n|R^n=n^2\not\to0$, расходится. Область: $(-5;1)$.</p></details></li><li><p class="q">Пользуясь признаком Вейерштрасса, доказать равномерную сходимость функционального ряда на указанном промежутке <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{x^n}{n^2\,2^n},\quad x\in[-2;2]$$</div>
+<details><summary>Ответ</summary><p>Мажоранта $\sum\dfrac1{n^2}$.</p></details></li><li><p class="q">Разложить $f(x)$ в ряд Тейлора в окрестности точки $x_0$. Указать область сходимости и найти указанную производную <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle f(x)=\frac{1}{x^2-5x+6},\quad x_0=0,\quad f^{(20)}(0)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=\sum\limits_{n=0}^{\infty}\left(\dfrac1{2^{n+1}}-\dfrac1{3^{n+1}}\right)x^n$, $x\in(-2;2)$. $f^{(20)}(0)=20!\left(\dfrac1{2^{21}}-\dfrac1{3^{21}}\right)$.</p></details></li></ol>
+<button class="all" type="button">Показать все ответы</button></section>
+<section class="var" id="v5"><h2>Вариант 5<small></small></h2>
+<ol><li><p class="q">Исследовать на сходимость <span class="pts">(1 балл)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}n\left(e^{2/n^2}-1\right)$$</div>
+<details><summary>Ответ</summary><p>Расходится: $a_n\sim\dfrac2n$.</p></details></li><li><p class="q">Исследовать на сходимость <span class="pts">(2 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{3^n\,n!}{n^n}$$</div>
+<details><summary>Ответ</summary><p>Расходится: $\dfrac{a_{n+1}}{a_n}\to\dfrac3e>1$.</p></details></li><li><p class="q">Исследовать на абсолютную и условную сходимость. Оценить остаток ряда $R_{4}$ <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=2}^{\infty}\frac{(-1)^n}{\sqrt n\,\ln n}$$</div>
+<details><summary>Ответ</summary><p>Сходится условно. $|R_4|\le\dfrac1{\sqrt6\,\ln6}$.</p></details></li><li><p class="q">Найти радиус и интервал сходимости степенного ряда. Исследовать сходимость на концах интервала <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{2^n+3^n}{n}\,x^n$$</div>
+<details><summary>Ответ</summary><p>$R=\dfrac13$. При $x=\frac13$ расходится, при $x=-\frac13$ сходится (условно). Область: $\left[-\frac13;\frac13\right)$.</p></details></li><li><p class="q">Пользуясь признаком Вейерштрасса, доказать равномерную сходимость функционального ряда на указанном промежутке <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}x\,e^{-nx},\quad x\in[1;+\infty)$$</div>
+<details><summary>Ответ</summary><p>Функция убывает на $[1;+\infty)$: мажоранта $\sum e^{-n}$.</p></details></li><li><p class="q">Разложить $f(x)$ в ряд Тейлора в окрестности точки $x_0$. Указать область сходимости и найти указанную производную <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle f(x)=(1+x)e^{-x},\quad x_0=0,\quad f^{(15)}(0)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=\sum\limits_{n=0}^{\infty}\dfrac{(-1)^n(1-n)}{n!}x^n$, $x\in\mathbb R$. $f^{(15)}(0)=14$.</p></details></li></ol>
+<button class="all" type="button">Показать все ответы</button></section>
+<section class="var" id="v6"><h2>Вариант 6<small></small></h2>
+<ol><li><p class="q">Исследовать на сходимость <span class="pts">(1 балл)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}n^2\operatorname{arctg}\frac{5}{n^4+3}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $a_n\sim\dfrac5{n^2}$.</p></details></li><li><p class="q">Исследовать на сходимость <span class="pts">(2 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\left(\frac{n-1}{n+1}\right)^{n(n+2)}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $\sqrt[n]{a_n}\to e^{-2}<1$.</p></details></li><li><p class="q">Исследовать на абсолютную и условную сходимость. Оценить остаток ряда $R_{3}$ <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{(-1)^{n+1}n^2}{3^n}$$</div>
+<details><summary>Ответ</summary><p>Сходится абсолютно. $|R_3|\le a_4=\dfrac{16}{81}$.</p></details></li><li><p class="q">Найти радиус и интервал сходимости степенного ряда. Исследовать сходимость на концах интервала <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{(-1)^n(x-2)^{3n}}{n\cdot 8^n}$$</div>
+<details><summary>Ответ</summary><p>$R=2$, интервал $(0;4)$. При $x=4$ сходится условно, при $x=0$ расходится. Область: $(0;4]$.</p></details></li><li><p class="q">Пользуясь признаком Вейерштрасса, доказать равномерную сходимость функционального ряда на указанном промежутке <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{x^2}{1+n^3x^2},\quad x\in\mathbb R$$</div>
+<details><summary>Ответ</summary><p>Мажоранта $\sum\dfrac1{n^3}$.</p></details></li><li><p class="q">Разложить $f(x)$ в ряд Тейлора в окрестности точки $x_0$. Указать область сходимости и найти указанную производную <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle f(x)=\frac{1}{\sqrt{1+x^2}},\quad x_0=0,\quad f^{(8)}(0)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=\sum\limits_{n=0}^{\infty}\dfrac{(-1)^n(2n-1)!!}{(2n)!!}x^{2n}$, $x\in[-1;1]$. $f^{(8)}(0)=8!\cdot\dfrac{7!!}{8!!}=11025$.</p></details></li></ol>
+<button class="all" type="button">Показать все ответы</button></section>
+<section class="var" id="v7"><h2>Вариант 7<small></small></h2>
+<ol><li><p class="q">Исследовать на сходимость <span class="pts">(1 балл)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{\sqrt{n^2+3}-n}{\sqrt n}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $a_n\sim\dfrac{3}{2n^{3/2}}$.</p></details></li><li><p class="q">Исследовать на сходимость <span class="pts">(2 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{2^n\,n!}{n^n}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $\dfrac{a_{n+1}}{a_n}\to\dfrac2e<1$.</p></details></li><li><p class="q">Исследовать на абсолютную и условную сходимость. Оценить остаток ряда $R_{4}$ <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}(-1)^n\sin\frac{1}{\sqrt n}$$</div>
+<details><summary>Ответ</summary><p>Сходится условно. $|R_4|\le\sin\dfrac1{\sqrt5}$.</p></details></li><li><p class="q">Найти радиус и интервал сходимости степенного ряда. Исследовать сходимость на концах интервала <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{n!\,(x+3)^n}{n^n}$$</div>
+<details><summary>Ответ</summary><p>$R=e$, интервал $(-3-e;-3+e)$. На концах $|a_n|R^n\sim\sqrt{2\pi n}\to\infty$, расходится. Область: $(-3-e;-3+e)$.</p></details></li><li><p class="q">Пользуясь признаком Вейерштрасса, доказать равномерную сходимость функционального ряда на указанном промежутке <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{nx}{n^5+x^2},\quad x\in\mathbb R$$</div>
+<details><summary>Ответ</summary><p>$n^5+x^2\ge2n^{5/2}|x|$: мажоранта $\sum\dfrac1{2n^{3/2}}$.</p></details></li><li><p class="q">Разложить $f(x)$ в ряд Тейлора в окрестности точки $x_0$. Указать область сходимости и найти указанную производную <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle f(x)=\sin^2x,\quad x_0=0,\quad f^{(10)}(0)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=\sum\limits_{n=1}^{\infty}\dfrac{(-1)^{n+1}2^{2n-1}}{(2n)!}x^{2n}$, $x\in\mathbb R$. $f^{(10)}(0)=2^9=512$.</p></details></li></ol>
+<button class="all" type="button">Показать все ответы</button></section>
+<section class="var" id="v8"><h2>Вариант 8<small></small></h2>
+<ol><li><p class="q">Исследовать на сходимость <span class="pts">(1 балл)</span></p>
+<div class="f">$$\displaystyle \sum_{n=2}^{\infty}\frac{n+1}{n^2\ln^2 n}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $a_n\sim\dfrac{1}{n\ln^2n}$, а $\displaystyle\int_2^{\infty}\frac{dx}{x\ln^2x}=\frac1{\ln2}$.</p></details></li><li><p class="q">Исследовать на сходимость <span class="pts">(2 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}e^{2n}\left(\frac{n}{n+3}\right)^{n^2}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $\sqrt[n]{a_n}\to e^{2}e^{-3}=e^{-1}<1$.</p></details></li><li><p class="q">Исследовать на абсолютную и условную сходимость. Оценить остаток ряда $R_{4}$ <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=2}^{\infty}\frac{(-1)^n}{n\ln^2 n}$$</div>
+<details><summary>Ответ</summary><p>Сходится абсолютно (интегральный признак для модулей). $|R_4|\le\dfrac1{6\ln^2 6}$.</p></details></li><li><p class="q">Найти радиус и интервал сходимости степенного ряда. Исследовать сходимость на концах интервала <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{3^n}{\sqrt n}\operatorname{tg}\frac{1}{\sqrt n}\,(x-1)^n$$</div>
+<details><summary>Ответ</summary><p>$R=\dfrac13$. При $x=\frac43$ расходится ($\sim\frac1n$), при $x=\frac23$ сходится условно. Область: $\left[\frac23;\frac43\right)$.</p></details></li><li><p class="q">Пользуясь признаком Вейерштрасса, доказать равномерную сходимость функционального ряда на указанном промежутке <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{x^2}{n^4+x^3},\quad x\in[0;+\infty)$$</div>
+<details><summary>Ответ</summary><p>Максимум при $x^3=2n^4$: мажоранта $\sum\dfrac{\sqrt[3]4}{3n^{4/3}}$.</p></details></li><li><p class="q">Разложить $f(x)$ в ряд Тейлора в окрестности точки $x_0$. Указать область сходимости и найти указанную производную <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle f(x)=x\,e^{2x},\quad x_0=1,\quad f^{(10)}(1)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=e^2\sum\limits_{n=0}^{\infty}\dfrac{2^{n-1}(n+2)}{n!}(x-1)^n$, $x\in\mathbb R$. $f^{(10)}(1)=12\cdot2^9e^2=6144\,e^2$.</p></details></li></ol>
+<button class="all" type="button">Показать все ответы</button></section>
+<section class="var" id="v9"><h2>Вариант 9<small></small></h2>
+<ol><li><p class="q">Исследовать на сходимость <span class="pts">(1 балл)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}n^3\sin\frac{\pi}{2^n}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $a_n\sim\dfrac{\pi n^3}{2^n}$, далее Даламбер.</p></details></li><li><p class="q">Исследовать на сходимость <span class="pts">(2 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\left(\frac{5n+2}{5n-1}\right)^{n^2}$$</div>
+<details><summary>Ответ</summary><p>Расходится: $\sqrt[n]{a_n}\to e^{3/5}>1$.</p></details></li><li><p class="q">Исследовать на абсолютную и условную сходимость. Оценить остаток ряда $R_{4}$ <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}(-1)^{n+1}\ln\left(1+\frac1n\right)$$</div>
+<details><summary>Ответ</summary><p>Сходится условно. $|R_4|\le\ln\dfrac65$.</p></details></li><li><p class="q">Найти радиус и интервал сходимости степенного ряда. Исследовать сходимость на концах интервала <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\left(\frac{n+1}{2n+1}\right)^n(x+1)^n$$</div>
+<details><summary>Ответ</summary><p>$R=2$, интервал $(-3;1)$. На концах $|a_n|R^n\to e^{1/2}\ne0$, расходится. Область: $(-3;1)$.</p></details></li><li><p class="q">Пользуясь признаком Вейерштрасса, доказать равномерную сходимость функционального ряда на указанном промежутке <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{x^n}{(3+x)^{2n}},\quad x\in[1;5]$$</div>
+<details><summary>Ответ</summary><p>Числитель $\le5^n$, знаменатель $\ge16^n$: мажоранта $\sum\left(\dfrac5{16}\right)^n$.</p></details></li><li><p class="q">Разложить $f(x)$ в ряд Тейлора в окрестности точки $x_0$. Указать область сходимости и найти указанную производную <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle f(x)=\frac{x+2}{1-x},\quad x_0=0,\quad f^{(12)}(0)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=2+3\sum\limits_{n=1}^{\infty}x^n$, $x\in(-1;1)$. $f^{(12)}(0)=3\cdot12!$.</p></details></li></ol>
+<button class="all" type="button">Показать все ответы</button></section>
+<section class="var" id="v10"><h2>Вариант 10<small> · посложнее</small></h2>
+<ol><li><p class="q">Исследовать на сходимость <span class="pts">(1 балл)</span></p>
+<div class="f">$$\displaystyle \sum_{n=2}^{\infty}\frac{\sqrt[n]{n}-1}{n}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $a_n\sim\dfrac{\ln n}{n^2}$.</p></details></li><li><p class="q">Исследовать на сходимость <span class="pts">(2 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{5^n\,n!}{(2n)^n}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $\dfrac{a_{n+1}}{a_n}\to\dfrac{5}{2e}<1$.</p></details></li><li><p class="q">Исследовать на абсолютную и условную сходимость. Оценить остаток ряда $R_{4}$ <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=2}^{\infty}\frac{(-1)^n\ln n}{n}$$</div>
+<details><summary>Ответ</summary><p>Сходится условно (члены убывают при $n\ge3$). $|R_4|\le\dfrac{\ln6}{6}$.</p></details></li><li><p class="q">Найти радиус и интервал сходимости степенного ряда. Исследовать сходимость на концах интервала <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{\bigl(3+(-1)^n\bigr)^n}{n}\,x^n$$</div>
+<details><summary>Ответ</summary><p>$\varlimsup\sqrt[n]{|a_n|}=4$, $R=\dfrac14$. На обоих концах расходится (чётные члены дают $\sum\frac1{2k}$). Область: $\left(-\frac14;\frac14\right)$.</p></details></li><li><p class="q">Пользуясь признаком Вейерштрасса, доказать равномерную сходимость функционального ряда на указанном промежутке <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}x^2e^{-n^2x^2},\quad x\in\mathbb R$$</div>
+<details><summary>Ответ</summary><p>Максимум при $x^2=\frac1{n^2}$: мажоранта $\sum\dfrac{1}{e\,n^2}$.</p></details></li><li><p class="q">Разложить $f(x)$ в ряд Тейлора в окрестности точки $x_0$. Указать область сходимости и найти указанную производную <span class="pts">(3 балла)</span></p>
+<div class="f">$$\displaystyle f(x)=\sqrt[3]{x},\quad x_0=8,\quad f^{(4)}(8)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=2\sum\limits_{n=0}^{\infty}\dbinom{1/3}{n}\dfrac{(x-8)^n}{8^n}$, $x\in[0;16]$. $f^{(4)}(8)=-\dfrac{5}{10368}$.</p></details></li></ol>
+<button class="all" type="button">Показать все ответы</button></section>
+<section class="var" id="t1"><h2>1. Положительный ряд: сравнение<small>1 балл</small></h2>
+<p class="q">Исследовать на сходимость</p>
+<ul class="byt"><li><p class="q"><b>Вариант 1</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty} n\,\operatorname{tg}\frac{3}{n^3+1}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $a_n\sim \dfrac{3}{n^2}$.</p></details></li><li><p class="q"><b>Вариант 2</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\sqrt n\left(1-\cos\frac{2}{n}\right)$$</div>
+<details><summary>Ответ</summary><p>Сходится: $a_n\sim \dfrac{2}{n^{3/2}}$.</p></details></li><li><p class="q"><b>Вариант 3</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}(n+1)\ln\left(1+\frac{1}{n^2+2}\right)$$</div>
+<details><summary>Ответ</summary><p>Расходится: $a_n\sim \dfrac1n$.</p></details></li><li><p class="q"><b>Вариант 4</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{\operatorname{arctg}^2(n^2+1)}{n\sqrt n}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $a_n\sim\dfrac{\pi^2}{4n^{3/2}}$ (аргумент арктангенса стремится к $\infty$, а не к нулю).</p></details></li><li><p class="q"><b>Вариант 5</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}n\left(e^{2/n^2}-1\right)$$</div>
+<details><summary>Ответ</summary><p>Расходится: $a_n\sim\dfrac2n$.</p></details></li><li><p class="q"><b>Вариант 6</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}n^2\operatorname{arctg}\frac{5}{n^4+3}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $a_n\sim\dfrac5{n^2}$.</p></details></li><li><p class="q"><b>Вариант 7</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{\sqrt{n^2+3}-n}{\sqrt n}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $a_n\sim\dfrac{3}{2n^{3/2}}$.</p></details></li><li><p class="q"><b>Вариант 8</b></p>
+<div class="f">$$\displaystyle \sum_{n=2}^{\infty}\frac{n+1}{n^2\ln^2 n}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $a_n\sim\dfrac{1}{n\ln^2n}$, а $\displaystyle\int_2^{\infty}\frac{dx}{x\ln^2x}=\frac1{\ln2}$.</p></details></li><li><p class="q"><b>Вариант 9</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}n^3\sin\frac{\pi}{2^n}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $a_n\sim\dfrac{\pi n^3}{2^n}$, далее Даламбер.</p></details></li><li><p class="q"><b>Вариант 10</b> (посложнее)</p>
+<div class="f">$$\displaystyle \sum_{n=2}^{\infty}\frac{\sqrt[n]{n}-1}{n}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $a_n\sim\dfrac{\ln n}{n^2}$.</p></details></li></ul>
+<button class="all" type="button">Показать все ответы</button></section>
+<section class="var" id="t2"><h2>2. Признаки Коши и Даламбера<small>2 балла</small></h2>
+<p class="q">Исследовать на сходимость</p>
+<ul class="byt"><li><p class="q"><b>Вариант 1</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\left(\frac{3n+1}{3n+4}\right)^{n^2}$$</div>
+<details><summary>Ответ</summary><p>Сходится (радикальный Коши): $\sqrt[n]{a_n}\to e^{-1}<1$.</p></details></li><li><p class="q"><b>Вариант 2</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\left(\frac{2n^2+1}{2n^2+3}\right)^{n^3}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $\sqrt[n]{a_n}\to e^{-1}<1$.</p></details></li><li><p class="q"><b>Вариант 3</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{(n!)^2\,3^n}{(2n)!}$$</div>
+<details><summary>Ответ</summary><p>Сходится (Даламбер): $\dfrac{a_{n+1}}{a_n}\to\dfrac34<1$.</p></details></li><li><p class="q"><b>Вариант 4</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{1}{2^n}\left(\frac{n+2}{n+1}\right)^{n^2}$$</div>
+<details><summary>Ответ</summary><p>Расходится: $\sqrt[n]{a_n}\to\dfrac e2>1$.</p></details></li><li><p class="q"><b>Вариант 5</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{3^n\,n!}{n^n}$$</div>
+<details><summary>Ответ</summary><p>Расходится: $\dfrac{a_{n+1}}{a_n}\to\dfrac3e>1$.</p></details></li><li><p class="q"><b>Вариант 6</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\left(\frac{n-1}{n+1}\right)^{n(n+2)}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $\sqrt[n]{a_n}\to e^{-2}<1$.</p></details></li><li><p class="q"><b>Вариант 7</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{2^n\,n!}{n^n}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $\dfrac{a_{n+1}}{a_n}\to\dfrac2e<1$.</p></details></li><li><p class="q"><b>Вариант 8</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}e^{2n}\left(\frac{n}{n+3}\right)^{n^2}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $\sqrt[n]{a_n}\to e^{2}e^{-3}=e^{-1}<1$.</p></details></li><li><p class="q"><b>Вариант 9</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\left(\frac{5n+2}{5n-1}\right)^{n^2}$$</div>
+<details><summary>Ответ</summary><p>Расходится: $\sqrt[n]{a_n}\to e^{3/5}>1$.</p></details></li><li><p class="q"><b>Вариант 10</b> (посложнее)</p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{5^n\,n!}{(2n)^n}$$</div>
+<details><summary>Ответ</summary><p>Сходится: $\dfrac{a_{n+1}}{a_n}\to\dfrac{5}{2e}<1$.</p></details></li></ul>
+<button class="all" type="button">Показать все ответы</button></section>
+<section class="var" id="t3"><h2>3. Знакочередующийся ряд<small>3 балла</small></h2>
+<p class="q">Исследовать на абсолютную и условную сходимость. Оценить остаток ряда $R_{k}$</p>
+<ul class="byt"><li><p class="q"><b>Вариант 1</b> · оценить $R_{4}$</p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{(-1)^{n+1}\,n}{n^2+3}$$</div>
+<details><summary>Ответ</summary><p>Сходится условно. $|R_4|\le a_5=\dfrac{5}{28}$.</p></details></li><li><p class="q"><b>Вариант 2</b> · оценить $R_{4}$</p>
+<div class="f">$$\displaystyle \sum_{n=2}^{\infty}\frac{(-1)^n}{n\ln n}$$</div>
+<details><summary>Ответ</summary><p>Сходится условно (ряд из модулей расходится по интегральному признаку). $|R_4|\le \dfrac{1}{6\ln 6}$.</p></details></li><li><p class="q"><b>Вариант 3</b> · оценить $R_{3}$</p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{(-1)^n}{n^2+1}$$</div>
+<details><summary>Ответ</summary><p>Сходится абсолютно. $|R_3|\le a_4=\dfrac1{17}$.</p></details></li><li><p class="q"><b>Вариант 4</b> · оценить $R_{3}$</p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{(-1)^{3n}(2n+1)}{n(n+1)}$$</div>
+<details><summary>Ответ</summary><p>Сходится условно. $|R_3|\le a_4=\dfrac{9}{20}$.</p></details></li><li><p class="q"><b>Вариант 5</b> · оценить $R_{4}$</p>
+<div class="f">$$\displaystyle \sum_{n=2}^{\infty}\frac{(-1)^n}{\sqrt n\,\ln n}$$</div>
+<details><summary>Ответ</summary><p>Сходится условно. $|R_4|\le\dfrac1{\sqrt6\,\ln6}$.</p></details></li><li><p class="q"><b>Вариант 6</b> · оценить $R_{3}$</p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{(-1)^{n+1}n^2}{3^n}$$</div>
+<details><summary>Ответ</summary><p>Сходится абсолютно. $|R_3|\le a_4=\dfrac{16}{81}$.</p></details></li><li><p class="q"><b>Вариант 7</b> · оценить $R_{4}$</p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}(-1)^n\sin\frac{1}{\sqrt n}$$</div>
+<details><summary>Ответ</summary><p>Сходится условно. $|R_4|\le\sin\dfrac1{\sqrt5}$.</p></details></li><li><p class="q"><b>Вариант 8</b> · оценить $R_{4}$</p>
+<div class="f">$$\displaystyle \sum_{n=2}^{\infty}\frac{(-1)^n}{n\ln^2 n}$$</div>
+<details><summary>Ответ</summary><p>Сходится абсолютно (интегральный признак для модулей). $|R_4|\le\dfrac1{6\ln^2 6}$.</p></details></li><li><p class="q"><b>Вариант 9</b> · оценить $R_{4}$</p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}(-1)^{n+1}\ln\left(1+\frac1n\right)$$</div>
+<details><summary>Ответ</summary><p>Сходится условно. $|R_4|\le\ln\dfrac65$.</p></details></li><li><p class="q"><b>Вариант 10</b> (посложнее) · оценить $R_{4}$</p>
+<div class="f">$$\displaystyle \sum_{n=2}^{\infty}\frac{(-1)^n\ln n}{n}$$</div>
+<details><summary>Ответ</summary><p>Сходится условно (члены убывают при $n\ge3$). $|R_4|\le\dfrac{\ln6}{6}$.</p></details></li></ul>
+<button class="all" type="button">Показать все ответы</button></section>
+<section class="var" id="t4"><h2>4. Степенной ряд<small>3 балла</small></h2>
+<p class="q">Найти радиус и интервал сходимости степенного ряда. Исследовать сходимость на концах интервала</p>
+<ul class="byt"><li><p class="q"><b>Вариант 1</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{(x-3)^n}{n\cdot 2^n}$$</div>
+<details><summary>Ответ</summary><p>$R=2$, интервал $(1;5)$. При $x=1$ сходится условно, при $x=5$ расходится. Область: $[1;5)$.</p></details></li><li><p class="q"><b>Вариант 2</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{(x+1)^{2n}}{4^n\sqrt n}$$</div>
+<details><summary>Ответ</summary><p>$R=2$, интервал $(-3;1)$. На обоих концах ряд $\sum\frac1{\sqrt n}$ расходится. Область: $(-3;1)$.</p></details></li><li><p class="q"><b>Вариант 3</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\left(1+\frac1n\right)^{n^2}(x-1)^n$$</div>
+<details><summary>Ответ</summary><p>$R=\dfrac1e$, интервал $\left(1-\frac1e;1+\frac1e\right)$. На концах $|a_n|R^n\to e^{-1/2}\ne0$, ряд расходится. Область: $\left(1-\frac1e;1+\frac1e\right)$.</p></details></li><li><p class="q"><b>Вариант 4</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{n^2(x+2)^n}{3^n}$$</div>
+<details><summary>Ответ</summary><p>$R=3$, интервал $(-5;1)$. На концах $|a_n|R^n=n^2\not\to0$, расходится. Область: $(-5;1)$.</p></details></li><li><p class="q"><b>Вариант 5</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{2^n+3^n}{n}\,x^n$$</div>
+<details><summary>Ответ</summary><p>$R=\dfrac13$. При $x=\frac13$ расходится, при $x=-\frac13$ сходится (условно). Область: $\left[-\frac13;\frac13\right)$.</p></details></li><li><p class="q"><b>Вариант 6</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{(-1)^n(x-2)^{3n}}{n\cdot 8^n}$$</div>
+<details><summary>Ответ</summary><p>$R=2$, интервал $(0;4)$. При $x=4$ сходится условно, при $x=0$ расходится. Область: $(0;4]$.</p></details></li><li><p class="q"><b>Вариант 7</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{n!\,(x+3)^n}{n^n}$$</div>
+<details><summary>Ответ</summary><p>$R=e$, интервал $(-3-e;-3+e)$. На концах $|a_n|R^n\sim\sqrt{2\pi n}\to\infty$, расходится. Область: $(-3-e;-3+e)$.</p></details></li><li><p class="q"><b>Вариант 8</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{3^n}{\sqrt n}\operatorname{tg}\frac{1}{\sqrt n}\,(x-1)^n$$</div>
+<details><summary>Ответ</summary><p>$R=\dfrac13$. При $x=\frac43$ расходится ($\sim\frac1n$), при $x=\frac23$ сходится условно. Область: $\left[\frac23;\frac43\right)$.</p></details></li><li><p class="q"><b>Вариант 9</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\left(\frac{n+1}{2n+1}\right)^n(x+1)^n$$</div>
+<details><summary>Ответ</summary><p>$R=2$, интервал $(-3;1)$. На концах $|a_n|R^n\to e^{1/2}\ne0$, расходится. Область: $(-3;1)$.</p></details></li><li><p class="q"><b>Вариант 10</b> (посложнее)</p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{\bigl(3+(-1)^n\bigr)^n}{n}\,x^n$$</div>
+<details><summary>Ответ</summary><p>$\varlimsup\sqrt[n]{|a_n|}=4$, $R=\dfrac14$. На обоих концах расходится (чётные члены дают $\sum\frac1{2k}$). Область: $\left(-\frac14;\frac14\right)$.</p></details></li></ul>
+<button class="all" type="button">Показать все ответы</button></section>
+<section class="var" id="t5"><h2>5. Признак Вейерштрасса<small>3 балла</small></h2>
+<p class="q">Пользуясь признаком Вейерштрасса, доказать равномерную сходимость функционального ряда на указанном промежутке</p>
+<ul class="byt"><li><p class="q"><b>Вариант 1</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{\sin nx}{n^2+x^2},\quad x\in\mathbb R$$</div>
+<details><summary>Ответ</summary><p>Мажоранта $\sum\dfrac1{n^2}$.</p></details></li><li><p class="q"><b>Вариант 2</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{x}{1+n^4x^2},\quad x\in[0;+\infty)$$</div>
+<details><summary>Ответ</summary><p>Максимум при $x=\frac1{n^2}$: мажоранта $\sum\dfrac{1}{2n^2}$.</p></details></li><li><p class="q"><b>Вариант 3</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{\operatorname{arctg}(nx)}{n\sqrt n},\quad x\in\mathbb R$$</div>
+<details><summary>Ответ</summary><p>Мажоранта $\sum\dfrac{\pi}{2n^{3/2}}$.</p></details></li><li><p class="q"><b>Вариант 4</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{x^n}{n^2\,2^n},\quad x\in[-2;2]$$</div>
+<details><summary>Ответ</summary><p>Мажоранта $\sum\dfrac1{n^2}$.</p></details></li><li><p class="q"><b>Вариант 5</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}x\,e^{-nx},\quad x\in[1;+\infty)$$</div>
+<details><summary>Ответ</summary><p>Функция убывает на $[1;+\infty)$: мажоранта $\sum e^{-n}$.</p></details></li><li><p class="q"><b>Вариант 6</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{x^2}{1+n^3x^2},\quad x\in\mathbb R$$</div>
+<details><summary>Ответ</summary><p>Мажоранта $\sum\dfrac1{n^3}$.</p></details></li><li><p class="q"><b>Вариант 7</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{nx}{n^5+x^2},\quad x\in\mathbb R$$</div>
+<details><summary>Ответ</summary><p>$n^5+x^2\ge2n^{5/2}|x|$: мажоранта $\sum\dfrac1{2n^{3/2}}$.</p></details></li><li><p class="q"><b>Вариант 8</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{x^2}{n^4+x^3},\quad x\in[0;+\infty)$$</div>
+<details><summary>Ответ</summary><p>Максимум при $x^3=2n^4$: мажоранта $\sum\dfrac{\sqrt[3]4}{3n^{4/3}}$.</p></details></li><li><p class="q"><b>Вариант 9</b></p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}\frac{x^n}{(3+x)^{2n}},\quad x\in[1;5]$$</div>
+<details><summary>Ответ</summary><p>Числитель $\le5^n$, знаменатель $\ge16^n$: мажоранта $\sum\left(\dfrac5{16}\right)^n$.</p></details></li><li><p class="q"><b>Вариант 10</b> (посложнее)</p>
+<div class="f">$$\displaystyle \sum_{n=1}^{\infty}x^2e^{-n^2x^2},\quad x\in\mathbb R$$</div>
+<details><summary>Ответ</summary><p>Максимум при $x^2=\frac1{n^2}$: мажоранта $\sum\dfrac{1}{e\,n^2}$.</p></details></li></ul>
+<button class="all" type="button">Показать все ответы</button></section>
+<section class="var" id="t6"><h2>6. Ряд Тейлора<small>3 балла</small></h2>
+<p class="q">Разложить $f(x)$ в ряд Тейлора в окрестности точки $x_0$. Указать область сходимости и найти указанную производную</p>
+<ul class="byt"><li><p class="q"><b>Вариант 1</b></p>
+<div class="f">$$\displaystyle f(x)=x^2\ln(1+3x),\quad x_0=0,\quad f^{(10)}(0)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=\sum\limits_{n=1}^{\infty}\dfrac{(-1)^{n+1}3^n}{n}\,x^{n+2}$, $x\in\left(-\tfrac13;\tfrac13\right]$. $f^{(10)}(0)=-\dfrac{10!\cdot 3^8}{8}=-2\,976\,069\,600$.</p></details></li><li><p class="q"><b>Вариант 2</b></p>
+<div class="f">$$\displaystyle f(x)=\frac{x}{4+x^2},\quad x_0=0,\quad f^{(9)}(0)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=\sum\limits_{n=0}^{\infty}\dfrac{(-1)^n x^{2n+1}}{4^{n+1}}$, $x\in(-2;2)$. $f^{(9)}(0)=\dfrac{9!}{4^5}=\dfrac{2835}{8}$.</p></details></li><li><p class="q"><b>Вариант 3</b></p>
+<div class="f">$$\displaystyle f(x)=\ln(5-2x),\quad x_0=1,\quad f^{(7)}(1)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=\ln3-\sum\limits_{n=1}^{\infty}\dfrac{2^n}{3^n n}(x-1)^n$, $x\in\left[-\tfrac12;\tfrac52\right)$. $f^{(7)}(1)=-\dfrac{6!\cdot2^7}{3^7}=-\dfrac{10240}{243}$.</p></details></li><li><p class="q"><b>Вариант 4</b></p>
+<div class="f">$$\displaystyle f(x)=\frac{1}{x^2-5x+6},\quad x_0=0,\quad f^{(20)}(0)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=\sum\limits_{n=0}^{\infty}\left(\dfrac1{2^{n+1}}-\dfrac1{3^{n+1}}\right)x^n$, $x\in(-2;2)$. $f^{(20)}(0)=20!\left(\dfrac1{2^{21}}-\dfrac1{3^{21}}\right)$.</p></details></li><li><p class="q"><b>Вариант 5</b></p>
+<div class="f">$$\displaystyle f(x)=(1+x)e^{-x},\quad x_0=0,\quad f^{(15)}(0)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=\sum\limits_{n=0}^{\infty}\dfrac{(-1)^n(1-n)}{n!}x^n$, $x\in\mathbb R$. $f^{(15)}(0)=14$.</p></details></li><li><p class="q"><b>Вариант 6</b></p>
+<div class="f">$$\displaystyle f(x)=\frac{1}{\sqrt{1+x^2}},\quad x_0=0,\quad f^{(8)}(0)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=\sum\limits_{n=0}^{\infty}\dfrac{(-1)^n(2n-1)!!}{(2n)!!}x^{2n}$, $x\in[-1;1]$. $f^{(8)}(0)=8!\cdot\dfrac{7!!}{8!!}=11025$.</p></details></li><li><p class="q"><b>Вариант 7</b></p>
+<div class="f">$$\displaystyle f(x)=\sin^2x,\quad x_0=0,\quad f^{(10)}(0)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=\sum\limits_{n=1}^{\infty}\dfrac{(-1)^{n+1}2^{2n-1}}{(2n)!}x^{2n}$, $x\in\mathbb R$. $f^{(10)}(0)=2^9=512$.</p></details></li><li><p class="q"><b>Вариант 8</b></p>
+<div class="f">$$\displaystyle f(x)=x\,e^{2x},\quad x_0=1,\quad f^{(10)}(1)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=e^2\sum\limits_{n=0}^{\infty}\dfrac{2^{n-1}(n+2)}{n!}(x-1)^n$, $x\in\mathbb R$. $f^{(10)}(1)=12\cdot2^9e^2=6144\,e^2$.</p></details></li><li><p class="q"><b>Вариант 9</b></p>
+<div class="f">$$\displaystyle f(x)=\frac{x+2}{1-x},\quad x_0=0,\quad f^{(12)}(0)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=2+3\sum\limits_{n=1}^{\infty}x^n$, $x\in(-1;1)$. $f^{(12)}(0)=3\cdot12!$.</p></details></li><li><p class="q"><b>Вариант 10</b> (посложнее)</p>
+<div class="f">$$\displaystyle f(x)=\sqrt[3]{x},\quad x_0=8,\quad f^{(4)}(8)$$</div>
+<details><summary>Ответ</summary><p>$f(x)=2\sum\limits_{n=0}^{\infty}\dbinom{1/3}{n}\dfrac{(x-8)^n}{8^n}$, $x\in[0;16]$. $f^{(4)}(8)=-\dfrac{5}{10368}$.</p></details></li></ul>
+<button class="all" type="button">Показать все ответы</button></section>
+</main>
+<footer>Задачи составлены по образцу демоверсий; ответы проверены, но если найдёшь ошибку — напиши в issues репозитория.</footer>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$']]},svg:{fontCache:'global'}};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+<script>
+{
+const show=()=>{const h=location.hash.slice(1);const id=/^[vt]\d+$/.test(h)&&document.getElementById(h)?h:'v1';const m=id[0];
+document.querySelectorAll('.var').forEach(s=>s.classList.toggle('on',s.id===id));
+document.getElementById('nv').hidden=m!=='v';document.getElementById('nt').hidden=m!=='t';
+document.querySelectorAll('.mode button').forEach(b=>b.setAttribute('aria-selected',b.dataset.m===m));
+document.querySelectorAll('nav a').forEach(a=>{const k=a.dataset.v.length&&a.dataset.v[0]==='t'?a.dataset.v:'v'+a.dataset.v;k===id?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')});};
+document.querySelectorAll('.mode button').forEach(b=>b.addEventListener('click',()=>{location.hash=b.dataset.m==='v'?'v1':'t1';}));
+addEventListener('hashchange',show);show();
+document.querySelectorAll('.all').forEach(b=>b.addEventListener('click',()=>{const d=b.closest('.var').querySelectorAll('details');const open=![...d].every(x=>x.open);d.forEach(x=>x.open=open);b.textContent=open?'Скрыть все ответы':'Показать все ответы';}));
+}
+</script>
+</body>
+</html>
